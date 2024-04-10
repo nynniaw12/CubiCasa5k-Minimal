@@ -859,6 +859,7 @@ def walls_same_corner(wall1, wall2, wall_points):
 
 
 def extract_wall_polygon(wall, wall_points, segmentation, seg_class):
+
     _, max_height, max_width = segmentation.shape
     x1 = wall_points[wall[0]][0]
     x2 = wall_points[wall[1]][0]
@@ -903,10 +904,11 @@ def extract_wall_polygon(wall, wall_points, segmentation, seg_class):
 
             widths = np.append(widths, w_pos + w_neg + 1)
 
-        # widths = reject_outliers(widths)
-        # if len(widths) == 0:
-            # return None
-        wall_width = stats.mode(widths).mode[0]
+        widths = reject_outliers(widths)
+        if not len(widths):
+            return None
+        
+        wall_width = stats.mode(widths).mode
         if wall_width > y2 - y1:
             wall_width = y2 - y1
         w_delta = int(wall_width / 2.0)
@@ -960,9 +962,9 @@ def extract_wall_polygon(wall, wall_points, segmentation, seg_class):
             widths = np.append(widths, w_pos + w_neg + 1)
 
         # widths = reject_outliers(widths)
-        # if len(widths) == 0:
-            # return None
-        wall_width = stats.mode(widths).mode[0]
+        if len(widths) == 0:
+            return None
+        wall_width = stats.mode(widths).mode
         if wall_width > x2 - x1:
             wall_width = x2 - x1
         w_delta = int(wall_width / 2.0)
@@ -982,7 +984,6 @@ def extract_wall_polygon(wall, wall_points, segmentation, seg_class):
         polygon[:, 1] = np.clip(polygon[:, 1], 0, max_height)
 
         return wall_width, polygon
-
 
 def reject_outliers(data, m=0.5):
     data = data[data < 70]

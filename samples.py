@@ -4,7 +4,7 @@
 """
 
 # %%
-%matplotlib inline
+
 from skimage import transform
 import numpy as np
 import matplotlib.pyplot as plt
@@ -18,6 +18,10 @@ from floortrans.plotting import segmentation_plot, polygons_to_image, draw_junct
 discrete_cmap()
 from floortrans.post_prosessing import split_prediction, get_polygons, split_validation
 from mpl_toolkits.axes_grid1 import AxesGrid
+
+
+
+
 
 rot = RotateNTurns()
 room_classes = ["Background", "Outdoor", "Wall", "Kitchen", "Living Room" ,"Bed Room", "Bath", "Entry", "Railing", "Storage", "Garage", "Undefined"]
@@ -53,7 +57,7 @@ plt.figure(figsize=(10,10))
 plt.title('Source Image', fontsize=20)
 plt.axis('off')
 plt.imshow(np_img)
-plt.show()
+plt.savefig('src.png');
 
 # %%
 """
@@ -81,7 +85,7 @@ n_rooms = 12
 rseg = ax.imshow(label_np[0], cmap='rooms', vmin=0, vmax=n_rooms-0.1)
 cbar = plt.colorbar(rseg, ticks=np.arange(n_rooms) + 0.5, fraction=0.046, pad=0.01)
 cbar.ax.set_yticklabels(room_classes, fontsize=20)
-plt.show()
+plt.savefig('roomswalls.png')
 
 plt.figure(figsize=(10,10))
 ax = plt.subplot(1, 1, 1)
@@ -91,7 +95,7 @@ n_icons = 11
 iseg = ax.imshow(label_np[1], cmap='icons', vmin=0, vmax=n_icons-0.1)
 cbar = plt.colorbar(iseg, ticks=np.arange(n_icons) + 0.5, fraction=0.046, pad=0.01)
 cbar.ax.set_yticklabels(icon_classes, fontsize=20)
-plt.show()
+plt.savefig('icons.png')
 
 plt.figure(figsize=(10,10))
 ax = plt.subplot(1, 1, 1)
@@ -100,7 +104,7 @@ ax.axis('off')
 ax.imshow(np_img)
 h, w, _ = np_img.shape
 draw_junction_from_dict(junctions, w, h, size=0.3, fontsize=10)
-plt.show()
+plt.savefig('walljuncs.png')
 
 # %%
 """
@@ -146,7 +150,7 @@ ax.axis('off')
 rseg = ax.imshow(rooms_pred, cmap='rooms', vmin=0, vmax=n_rooms-0.1)
 cbar = plt.colorbar(rseg, ticks=np.arange(n_rooms) + 0.5, fraction=0.046, pad=0.01)
 cbar.ax.set_yticklabels(room_classes, fontsize=20)
-plt.show()
+plt.savefig('rooms.png')
 
 plt.figure(figsize=(12,12))
 ax = plt.subplot(1, 1, 1)
@@ -154,7 +158,7 @@ ax.axis('off')
 iseg = ax.imshow(icons_pred, cmap='icons', vmin=0, vmax=n_icons-0.1)
 cbar = plt.colorbar(iseg, ticks=np.arange(n_icons) + 0.5, fraction=0.046, pad=0.01)
 cbar.ax.set_yticklabels(icon_classes, fontsize=20)
-plt.show()
+plt.savefig('icons.png')
 
 # %%
 """
@@ -174,7 +178,7 @@ rseg = ax.imshow(pol_room_seg, cmap='rooms', vmin=0, vmax=n_rooms-0.1)
 cbar = plt.colorbar(rseg, ticks=np.arange(n_rooms) + 0.5, fraction=0.046, pad=0.01)
 cbar.ax.set_yticklabels(room_classes, fontsize=20)
 plt.tight_layout()
-plt.show()
+plt.savefig('polrooms.png')
 
 plt.figure(figsize=(12,12))
 ax = plt.subplot(1, 1, 1)
@@ -183,7 +187,7 @@ iseg = ax.imshow(pol_icon_seg, cmap='icons', vmin=0, vmax=n_icons-0.1)
 cbar = plt.colorbar(iseg, ticks=np.arange(n_icons) + 0.5, fraction=0.046, pad=0.01)
 cbar.ax.set_yticklabels(icon_classes, fontsize=20)
 plt.tight_layout()
-plt.show()
+plt.savefig('policons.png')
 
 # %%
 """
@@ -205,7 +209,7 @@ for i, ax in enumerate(grid):
     im = ax.imshow(images[i], cmap='rooms', vmin=0, vmax=n_rooms-0.1)
 cbar = ax.cax.colorbar(rseg, ticks=np.arange(n_rooms) + 0.5)
 cbar.ax.set_yticklabels(room_classes, fontsize=26)
-plt.show()
+plt.savefig('roooms.png')
 
 # %%
 fig = plt.figure(figsize=(26, 12))
@@ -224,4 +228,4 @@ for i, ax in enumerate(grid):
 
 cbar = ax.cax.colorbar(iseg, ticks=np.arange(n_icons) + 0.5)
 cbar.ax.set_yticklabels(icon_classes, fontsize=26)
-plt.show()
+plt.savefig('icoons.png')
