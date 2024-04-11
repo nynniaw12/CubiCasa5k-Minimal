@@ -9,3 +9,4 @@ shapely==2.0.3
 svgpathtools==1.6.1
 sympy==1.12
 torch==2.2.2
+jupyterlab==4.1.6
